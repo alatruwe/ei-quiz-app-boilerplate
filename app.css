@@ -6,3 +6,28 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+header h1 {
+  text-align: center;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.wrapper {
+  margin: auto;
+  width: 70%;
+  border-style: solid;
+  border-color: blue;
+}
+
+h2, form {
+  text-align: center;
+}
+
+.wrong-answer {
+  border-style: solid;
+  border-color: red;
+}
