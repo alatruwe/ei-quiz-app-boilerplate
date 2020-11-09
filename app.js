@@ -92,7 +92,16 @@ const store = {
 // These functions return HTML templates
 
 // generate the start screen:
-// function startScreenHtml()
+function startScreenHtml() {
+  return `
+    <div class="wrapper">
+    <h2>Welcome and get ready.</h2>
+    <form>
+      <button>Go!</button>
+    </form>
+  </div>
+  `
+};
 
 // generate the quiz:
 // function questionNumberHtml()
@@ -109,7 +118,17 @@ const store = {
 // This function conditionally replaces the contents of the <main> tag 
 //based on the state of the store
 
-// function renderScreen()
+function renderScreen() {
+  // if quiz hasn't started, display the starting screen
+  $('main').html(startScreenHtml());
+  /* if quiz has started, display:
+  * question number
+  * question
+  * answer list
+  * submit button
+  * score
+  */
+};
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
@@ -120,12 +139,12 @@ const store = {
 // function handleRestartQuiz()
 
 
-/* function handleQuizApp() {
+function handleQuizApp() {
   renderScreen()
-  function handleStartClick()
-  function handleSubmitAnswer()
-  function handleNextQuestion()
-  function handleRestartQuiz()
-} */
+  //function handleStartClick()
+  //function handleSubmitAnswer()
+  //function handleNextQuestion()
+  //function handleRestartQuiz()
+} 
 
-// $(handleQuizApp);
+$(handleQuizApp);
