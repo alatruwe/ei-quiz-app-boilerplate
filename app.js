@@ -5,24 +5,64 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'How many paintings and artifacts does the Louvre have? around:',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        '38,000',
+        '5,000',
+        '70,000',
+        '100,000'
       ],
-      correctAnswer: 'green'
+      correctAnswer: '38,000'
     },
     {
-      question: 'What is the current year?',
+      question: 'How many cheese varieties does France produce? around:',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        '1,600',
+        '500',
+        '3,000',
+        '100'
       ],
-      correctAnswer: '2019'
+      correctAnswer: '1,600'
+    },
+    {
+      question: 'French local Jeanne Calment was the world\'s oldest person, how old was she?',
+      answers: [
+        '122 years old',
+        '115 years old',
+        '129 years old',
+        '105 years old'
+      ],
+      correctAnswer: '122 years old'
+    },
+    {
+      question: 'Paris is also called: ',
+      answers: [
+        'The City of Light',
+        'The City of Freedom',
+        'The City of Love',
+        'The City of Cheese'
+      ],
+      correctAnswer: 'The City of Light'
+    },
+    {
+      question: 'How many chateaus France has? Over:',
+      answers: [
+        '40,000',
+        '20,000',
+        '5,000',
+        '50,000'
+      ],
+      correctAnswer: '40,000'
+    },
+    {
+      question: 'What is the minimum weeks of vacation guaranteed in France?',
+      answers: [
+        '5 weeks',
+        '2 weeks',
+        '6 weeks',
+        '10 weeks'
+      ],
+      correctAnswer: '5 weeks'
     }
   ],
   quizStarted: false,
