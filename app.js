@@ -97,7 +97,9 @@ function startScreenHtml() {
     <div class="wrapper">
     <h2>Welcome and get ready.</h2>
     <form>
-      <button class="start">Go!</button>
+      <div class="buttons">
+        <button class="start">Go!</button>
+      </div>  
     </form>
   </div>
   `
@@ -129,17 +131,19 @@ function questionHtml() {
   const currentQuestion = store.questions[store.questionNumber];
   return `
     <form class="wrapper">
-      <fieldset>
+      <fieldset class="fieldset">
         <div>
           <p>${currentQuestion.question}</p>
         </div>
-        <div>
+        <div class="answer-list">
           ${answerListHtml()}
         </div> 
         <div class="answer-feedback"></div> 
       </fieldset>
-      <button class="submit-btn">Submit</button>
-      <button class="next-btn">Next</button>
+      <div class="buttons">
+        <button class="submit-btn">Submit</button>
+        <button class="next-btn">Next</button>
+      </div>
     </form>
   `
 }
@@ -196,7 +200,9 @@ function resultsScreenHtml() {
     <h2>All done!</h2>
     <h2> Your score is: ${store.score}/${store.questions.length}</h2>
     <form>
-      <button class="try-again-btn">Try again</button>
+      <div class="buttons">
+        <button class="try-again-btn">Try again</button>
+      </div>
     </form>
   </div>
   `
