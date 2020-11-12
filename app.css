@@ -10,7 +10,7 @@ header h1 {
   text-align: center;
 }
 
-section {
+form {
   display: flex;
   flex-direction: column;
 
@@ -30,4 +30,8 @@ h2, form {
 .wrong-answer {
   border-style: solid;
   border-color: red;
+}
+
+.next-btn {
+  display: none;
 }
