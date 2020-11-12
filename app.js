@@ -5,24 +5,24 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'How many paintings and artifacts does the Louvre have? around:',
+      question: 'How many paintings and artifacts does the Louvre have?',
       answers: [
-        '38,000',
-        '5,000',
-        '70,000',
-        '100,000'
+        'Around: 38,000',
+        'Around: 5,000',
+        'Around: 70,000',
+        'Around: 100,000'
       ],
-      correctAnswer: '38,000'
+      correctAnswer: 'Around: 38,000'
     },
     {
-      question: 'How many cheese varieties does France produce? around:',
+      question: 'How many cheese varieties does France produce?',
       answers: [
-        '1,600',
-        '500',
-        '3,000',
-        '100'
+        'Around: 1,600',
+        'Around: 500',
+        'Around: 3,000',
+        'Around: 100'
       ],
-      correctAnswer: '1,600'
+      correctAnswer: 'Around: 1,600'
     },
     {
       question: 'French local Jeanne Calment was the world\'s oldest person, how old was she?',
@@ -45,14 +45,14 @@ const store = {
       correctAnswer: 'The City of Light'
     },
     {
-      question: 'How many chateaus France has? Over:',
+      question: 'How many chateaus France has?',
       answers: [
-        '40,000',
-        '20,000',
-        '5,000',
-        '50,000'
+        'Over: 40,000',
+        'Over: 20,000',
+        'Over: 5,000',
+        'Over: 50,000'
       ],
-      correctAnswer: '40,000'
+      correctAnswer: 'Over: 40,000'
     },
     {
       question: 'What is the minimum weeks of vacation guaranteed in France?',
@@ -97,21 +97,110 @@ function startScreenHtml() {
     <div class="wrapper">
     <h2>Welcome and get ready.</h2>
     <form>
-      <button>Go!</button>
+      <button class="start">Go!</button>
     </form>
   </div>
   `
-};
+}
 
-// generate the quiz:
-// function questionNumberHtml()
-// function questionHtml()
-// function answerListHtml()
-// function scoreHtml()
-// function answerHtml()
+// generate the html for the quiz:
+function questionNumberHtml() {
+  return `
+  <h2>Question ${store.questionNumber + 1}/${store.questions.length}</h2>
+  `
+}
 
-// generate the end screen:
-// function resultsScreenHtml()
+function answerListHtml() {
+  // create new array to store answer list
+  const currentAnswers = store.questions[store.questionNumber].answers;
+  // create an empty string to store the list
+  let answerList = '';
+  // loop through new array 
+  for (let i = 0; i < currentAnswers.length; i++) {
+    answerList += `
+      <input name="answer" type="radio" value="${currentAnswers[i]}">
+      <label for="answer1">${currentAnswers[i]}</label><br>
+   `
+  };
+  return answerList;
+}
+
+function questionHtml() {
+  const currentQuestion = store.questions[store.questionNumber];
+  return `
+    <form class="wrapper">
+      <fieldset>
+        <div>
+          <p>${currentQuestion.question}</p>
+        </div>
+        <div>
+          ${answerListHtml()}
+        </div> 
+        <div class="answer-feedback"></div> 
+      </fieldset>
+      <button class="submit-btn">Submit</button>
+      <button class="next-btn">Next</button>
+    </form>
+  `
+}
+
+function scoreHtml() {
+  return `
+    <h2>Score: ${store.score}/${store.questions.length}</h2>
+  `
+}
+
+function answerIsCorrect() {
+  // get current question info
+  const currentQuestion = store.questions[store.questionNumber];
+  //get answer clicked and store it
+  let selectedAnswer = $('input[name=answer]:checked').val();
+
+  //check if value match correct answer in store
+  if (selectedAnswer === currentQuestion.correctAnswer) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+function answerNeeded() {
+  return `
+    <p>Please select an answer!</p>
+  `
+}
+
+function answerFeedback() {
+  const currentQuestion = store.questions[store.questionNumber];
+  if (answerIsCorrect()) {
+    store.score++;
+    console.log("correct answer")
+    return `
+      <p>Correct!</p>
+    `
+  }
+  else {
+    console.log("the answer is not correct")
+    return `
+      <p>Incorrect!</p>
+      <p>The answer is ${currentQuestion.correctAnswer}</p> 
+    ` 
+  }
+}
+
+// generate the end screen with score and try again button:
+function resultsScreenHtml() {
+  return `
+    <div class="wrapper">
+    <h2>All done!</h2>
+    <h2> Your score is: ${store.score}/${store.questions.length}</h2>
+    <form>
+      <button class="try-again-btn">Try again</button>
+    </form>
+  </div>
+  `
+}
 
 /********** RENDER FUNCTION(S) **********/
 
@@ -119,32 +208,95 @@ function startScreenHtml() {
 //based on the state of the store
 
 function renderScreen() {
+  let html = '';
   // if quiz hasn't started, display the starting screen
-  $('main').html(startScreenHtml());
-  /* if quiz has started, display:
-  * question number
-  * question
-  * answer list
-  * submit button
-  * score
-  */
-};
+  if (store.quizStarted === false) {
+    $('main').html(startScreenHtml());
+    console.log("startScreenHtml");
+    return;
+  }
+  // if quiz has started, display:
+  else if (store.questionNumber >= 0 && store.questionNumber < store.questions.length) {
+    // html of the question number
+    html = questionNumberHtml();
+    // html of the question form
+    html += questionHtml();
+    // html of the score
+    html += scoreHtml();
+    $('main').html(html);
+  }
+  // if quiz is done
+  else {
+    $('main').html(resultsScreenHtml());
+    console.log("resultsScreenHtml");
+  }
+}
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-// function handleStartClick()
-// function handleSubmitAnswer()
-// function handleNextQuestion()
-// function handleRestartQuiz()
 
+function handleStartClick() {
+  // when click on go button start the quiz
+  $('main').on('click', '.start', (event) => {
+    store.quizStarted = true;
+    
+    console.log("handleStartClick");
+    renderScreen();
+  });
+}
+
+function handleSubmitAnswer() {
+  // when click on submit button,
+  $('main').on('click', '.submit-btn', (event) => {
+    event.preventDefault();
+    
+    // look if an answer has been selected
+    let selectedAnswer = $('input[name=answer]:checked');
+    if (selectedAnswer.length === 0) {
+      $('.answer-feedback').html(answerNeeded());
+    }
+    else {
+      
+      $('.answer-feedback').html(answerFeedback());
+      // display next button
+      $('.submit-btn').hide();
+      $('.next-btn').show();
+      //add +1 question
+      store.questionNumber++;
+    }
+    console.log("handleSubmitAnswer");
+  });
+
+}
+
+function handleNextQuestion() {
+  $('main').on('click', '.next-btn', (event) => {
+    console.log("handleNextQuestion");
+    
+    renderScreen();
+  });
+}
+  
+function handleRestartQuiz() {
+  $('main').on('click', '.try-again-btn', (event) => {
+    console.log("handleRestartQuiz");
+    
+    // reset quiz, counting question and score
+    store.quizStarted = false;
+    store.questionNumber = 0;
+    store.score = 0;
+    // display start screen
+    renderScreen();
+  });  
+}
 
 function handleQuizApp() {
   renderScreen()
-  //function handleStartClick()
-  //function handleSubmitAnswer()
-  //function handleNextQuestion()
-  //function handleRestartQuiz()
+  handleStartClick()
+  handleSubmitAnswer()
+  handleNextQuestion()
+  handleRestartQuiz()
 } 
 
 $(handleQuizApp);
