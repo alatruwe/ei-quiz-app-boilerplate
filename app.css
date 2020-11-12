@@ -63,15 +63,23 @@ form {
 }
 
 /* deskstop view > 600px */
-h1 {
-  font-size: 55px;
-}
+@media all and (min-width: 600px) {
+  h1 {
+    font-size: 55px;
+  }
 
-h2 {
-  font-size: 50px;
-}
+  h2 {
+    font-size: 50px;
+  }
 
-.fieldset,
-.buttons {
-  font-size: 35px;
+  .wrapper {
+    margin: auto;
+    width: 60%;
+    padding: 0%;
+  }
+
+  .fieldset,
+  .buttons {
+    font-size: 35px;
+  }
 }
